@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>备婚进度管理 · 十一月初九 · 2026.12.17</title>
+<style>
+  :root {
+    --bg: #faf9f7;
+    --card: #ffffff;
+    --border: #e8e4df;
+    --text: #2c2520;
+    --text2: #7a7067;
+    --accent: #c8553d;
+    --accent-light: #f5e6e2;
+    --green: #5a8a5e;
+    --green-light: #e4f0e5;
+    --blue: #4a7c9b;
+    --blue-light: #e1eef5;
+    --yellow: #b08d3e;
+    --yellow-light: #f5edd8;
+    --purple: #7b6b8d;
+    --purple-light: #ede9f2;
+    --teal: #3a8a7a;
+    --teal-light: #e0f2ee;
+    --radius: 12px;
+    --shadow: 0 2px 12px rgba(44,37,32,0.06);
+    --shadow-lg: 0 8px 32px rgba(44,37,32,0.1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #2c2520 0%, #5a4a3f 100%);
+    color: white;
+    padding: 28px 24px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(44,37,32,0.15);
+  }
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .header h1 { font-size: 22px; font-weight: 700; letter-spacing: 1px; }
+  .header h1 .hl { color: #f0c9a0; }
+  .countdown {
+    background: rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 8px 20px;
+    font-size: 14px;
+    backdrop-filter: blur(4px);
+    white-space: nowrap;
+  }
+  .countdown strong { font-size: 22px; color: #f0c9a0; }
+  .progress-bar-wrap {
+    max-width: 1200px;
+    margin: 14px auto 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .progress-bar-wrap label { font-size: 12px; color: rgba(255,255,255,0.7); white-space: nowrap; }
+  .progress-bar { flex: 1; height: 6px; background: rgba(255,255,255,0.15); border-radius: 3px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #f0c9a0, #c8553d); border-radius: 3px; transition: width 0.6s ease; }
+  .progress-bar-wrap .pct { font-size: 13px; color: #f0c9a0; font-weight: 600; min-width: 40px; text-align: right; }
+  .header-sub {
+    max-width: 1200px;
+    margin: 10px auto 0;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+  }
+  .header-sub span { white-space: nowrap; }
+
+  .tabs {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 12px 24px 0;
+    display: flex;
+    gap: 4px;
+    border-bottom: 2px solid var(--border);
+    overflow-x: auto;
+  }
+  .tab {
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text2);
+    cursor: pointer;
+    border: none;
+    background: none;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+
+  .main { max-width: 1200px; margin: 0 auto; padding: 20px 24px; }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .section-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 24px 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title:first-child { margin-top: 0; }
+
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .overview-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--accent);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .overview-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+  .overview-card .oc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .overview-card .oc-title { font-size: 14px; font-weight: 600; }
+  .overview-card .oc-count { font-size: 12px; color: var(--text2); margin-bottom: 6px; }
+  .overview-card .oc-progress { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .overview-card .oc-progress-fill { height: 100%; border-radius: 2px; transition: width 0.4s; }
+
+  .budget-card {
+    background: linear-gradient(135deg, #2c2520 0%, #5a4a3f 100%);
+    border-radius: var(--radius);
+    padding: 20px;
+    color: white;
+    margin-bottom: 20px;
+  }
+  .budget-card .bc-title { font-size: 14px; color: rgba(255,255,255,0.7); margin-bottom: 8px; }
+  .budget-card .bc-amount { font-size: 28px; font-weight: 700; color: #f0c9a0; }
+  .budget-card .bc-amount small { font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.5); }
+  .budget-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; margin-top: 12px; }
+  .budget-item { background: rgba(255,255,255,0.08); border-radius: 8px; padding: 8px 12px; font-size: 12px; }
+  .budget-item .bi-label { color: rgba(255,255,255,0.6); }
+  .budget-item .bi-value { color: #f0c9a0; font-weight: 600; }
+
+  .budget-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+  .budget-stat { background: var(--card); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); text-align: center; }
+  .budget-stat .bs-icon { font-size: 18px; margin-bottom: 2px; }
+  .budget-stat .bs-label { font-size: 12px; color: var(--text2); margin-bottom: 2px; }
+  .budget-stat .bs-value { font-size: 20px; font-weight: 700; }
+  .budget-stat .bs-value.clr-green { color: var(--green); }
+  .budget-stat .bs-value.clr-accent { color: var(--accent); }
+  .budget-stat .bs-value.clr-blue { color: var(--blue); }
+  .budget-bar-wrap { margin-bottom: 24px; }
+  .budget-bar { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+  .budget-bar-fill { height: 100%; background: linear-gradient(90deg, var(--green), #8bc34a); border-radius: 4px; transition: width 0.6s; }
+  .budget-bar-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--text2); margin-top: 4px; }
+  .pay-section-title { font-size: 14px; font-weight: 600; margin: 24px 0 12px; display: flex; align-items: center; gap: 6px; }
+  .pay-card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 12px; overflow: hidden; }
+  .pay-card-head { padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; }
+  .pay-card-head:hover { background: rgba(0,0,0,0.015); }
+  .pay-card-head .pch-left { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; }
+  .pay-card-head .pch-icon { font-size: 20px; flex-shrink: 0; }
+  .pay-card-head .pch-name { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pay-card-head .pch-amount { font-size: 13px; font-weight: 600; color: var(--accent); white-space: nowrap; margin-left: 8px; }
+  .pay-card-head .pch-paid { font-size: 11px; color: var(--green); white-space: nowrap; margin-left: 8px; }
+  .pay-card-head .pch-toggle { font-size: 14px; color: var(--text2); margin-left: 6px; transition: transform 0.3s; }
+  .pay-card-bar { height: 3px; background: var(--border); }
+  .pay-card-bar-fill { height: 100%; background: var(--green); transition: width 0.4s; }
+  .pay-card-body { padding: 0; }
+  .pay-card-body.collapsed { display: none; }
+  .pay-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .pay-table th { padding: 7px 14px; text-align: left; font-weight: 500; color: var(--text2); background: var(--bg); font-size: 11px; }
+  .pay-table td { padding: 10px 14px; border-top: 1px solid var(--border); }
+  .pay-table .amt { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .pay-table .amt-paid { color: var(--green); }
+  .pay-table .amt-unpaid { color: var(--accent); }
+  .pay-chip { display: inline-flex; align-items: center; gap: 2px; padding: 3px 10px; border-radius: 10px; font-size: 11px; font-weight: 500; cursor: pointer; transition: all 0.2s; user-select: none; }
+  .pay-chip:hover { opacity: 0.75; }
+  .pay-chip.paid { background: var(--green-light); color: var(--green); }
+  .pay-chip.unpaid { background: var(--yellow-light); color: var(--yellow); }
+  .pay-chip.overdue { background: var(--accent-light); color: var(--accent); }
+  .pay-card-note { padding: 8px 14px; font-size: 11px; color: var(--text2); background: var(--bg); border-top: 1px solid var(--border); line-height: 1.6; }
+  .pending-item { padding: 10px 14px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+  .pending-item .pi-name { display: flex; align-items: center; gap: 6px; }
+  .pending-item .pi-note { font-size: 12px; color: var(--text2); }
+  .budget-hint { text-align: center; font-size: 11px; color: var(--text2); margin-top: 12px; padding: 8px; }
+
+  .badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 500; }
+  .badge-pending { background: var(--yellow-light); color: var(--yellow); }
+  .badge-active { background: var(--blue-light); color: var(--blue); }
+  .badge-done { background: var(--green-light); color: var(--green); }
+  .badge-overdue { background: var(--accent-light); color: var(--accent); }
+
+  .vendor-section { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 16px; overflow: hidden; }
+  .vendor-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .vendor-header:hover { background: rgba(0,0,0,0.015); }
+  .vendor-header .vh-left { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+  .vendor-header .vh-icon { font-size: 24px; flex-shrink: 0; }
+  .vendor-header .vh-info { min-width: 0; }
+  .vendor-header .vh-title { font-size: 15px; font-weight: 600; }
+  .vendor-header .vh-sub { font-size: 12px; color: var(--text2); }
+  .vendor-header .vh-price { font-size: 13px; color: var(--accent); font-weight: 600; white-space: nowrap; margin-left: 8px; }
+  .vendor-header .vh-toggle { font-size: 18px; color: var(--text2); transition: transform 0.3s; flex-shrink: 0; margin-left: 8px; }
+  .vendor-header.open .vh-toggle { transform: rotate(180deg); }
+  .vendor-body { padding: 0 18px 16px; display: none; }
+  .vendor-body.open { display: block; }
+
+  .detail-box {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 12px;
+    color: var(--text2);
+    line-height: 1.8;
+    margin-bottom: 12px;
+    white-space: pre-line;
+  }
+
+  .task-list { list-style: none; }
+  .task-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .task-item:last-child { border-bottom: none; }
+  .task-check {
+    width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--border);
+    cursor: pointer; flex-shrink: 0; margin-top: 2px; display: flex;
+    align-items: center; justify-content: center; font-size: 11px; color: white; transition: all 0.2s;
+  }
+  .task-check.done { background: var(--green); border-color: var(--green); }
+  .task-check:hover { border-color: var(--green); }
+  .task-info { flex: 1; min-width: 0; }
+  .task-title { font-size: 13px; font-weight: 500; }
+  .task-title.done-text { text-decoration: line-through; color: var(--text2); }
+  .task-meta { display: flex; gap: 8px; margin-top: 3px; font-size: 11px; color: var(--text2); flex-wrap: wrap; }
+
+  .people-box { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; margin-bottom: 12px; }
+  .people-box .pb-title { font-size: 12px; font-weight: 600; color: var(--text2); margin-bottom: 4px; }
+  .people-box .pb-list { font-size: 12px; color: var(--text); line-height: 1.8; }
+
+  .file-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .file-chip {
+    display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px;
+    background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+    font-size: 11px; color: var(--text); cursor: default;
+    max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+
+  .notes-area {
+    width: 100%; border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px;
+    font-size: 12px; font-family: inherit; resize: vertical; min-height: 50px; margin-top: 8px;
+    background: var(--bg); color: var(--text);
+  }
+  .notes-area:focus { outline: none; border-color: var(--accent); }
+
+  .timeline-container { position: relative; padding-left: 32px; }
+  .timeline-container::before { content: ''; position: absolute; left: 11px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+  .timeline-month { margin-bottom: 24px; }
+  .timeline-month-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 10px; position: relative; }
+  .timeline-month-title::before { content: ''; position: absolute; left: -27px; top: 5px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); border: 2px solid var(--card); box-shadow: 0 0 0 2px var(--accent); }
+  .timeline-event { background: var(--card); border-radius: var(--radius); padding: 12px 14px; margin-bottom: 8px; box-shadow: var(--shadow); display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .timeline-event .te-left { flex: 1; }
+  .timeline-event .te-date { font-size: 11px; color: var(--text2); }
+  .timeline-event .te-title { font-size: 13px; font-weight: 500; margin-top: 1px; }
+  .timeline-event .te-vendor { font-size: 11px; color: var(--text2); margin-top: 1px; }
+
+  .files-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+  .file-card { background: var(--card); border-radius: var(--radius); padding: 14px; box-shadow: var(--shadow); display: flex; align-items: flex-start; gap: 10px; transition: transform 0.2s; }
+  .file-card:hover { transform: translateY(-1px); }
+  .file-card .ff-icon { font-size: 28px; flex-shrink: 0; }
+  .file-card .ff-info { flex: 1; min-width: 0; }
+  .file-card .ff-name { font-size: 12px; font-weight: 500; word-break: break-all; }
+  .file-card .ff-meta { font-size: 11px; color: var(--text2); margin-top: 3px; }
+  .file-card .ff-vendor { display: inline-block; margin-top: 4px; padding: 2px 8px; border-radius: 6px; font-size: 10px; font-weight: 500; }
+
+  .btn { display: inline-flex; align-items: center; gap: 4px; padding: 7px 14px; border-radius: 8px; font-size: 12px; font-weight: 500; cursor: pointer; border: none; transition: all 0.2s; }
+  .btn-primary { background: var(--accent); color: white; }
+  .btn-primary:hover { background: #b04a35; }
+  .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text2); }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-sm { padding: 4px 10px; font-size: 11px; }
+
+  .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.4); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: var(--card); border-radius: 16px; width: 100%; max-width: 520px; box-shadow: var(--shadow-lg); max-height: 90vh; overflow-y: auto; }
+  .modal-head { padding: 18px 22px 10px; display: flex; justify-content: space-between; align-items: center; }
+  .modal-head h3 { font-size: 16px; font-weight: 600; }
+  .modal-close { width: 30px; height: 30px; border-radius: 50%; border: none; background: var(--bg); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text2); }
+  .modal-body { padding: 0 22px 22px; }
+  .form-group { margin-bottom: 14px; }
+  .form-group label { display: block; font-size: 12px; font-weight: 500; color: var(--text2); margin-bottom: 5px; }
+  .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; font-family: inherit; color: var(--text); background: var(--bg); }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--accent); }
+  .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 16px; }
+
+  .filter-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+  .filter-chip { padding: 5px 12px; border-radius: 16px; font-size: 12px; cursor: pointer; border: 1px solid var(--border); background: var(--card); color: var(--text2); transition: all 0.2s; white-space: nowrap; }
+  .filter-chip.active, .filter-chip:hover { background: var(--accent); color: white; border-color: var(--accent); }
+
+  .empty-state { text-align: center; padding: 40px 20px; color: var(--text2); }
+  .empty-state .es-icon { font-size: 40px; margin-bottom: 10px; }
+  .empty-state p { font-size: 13px; }
+
+  @media (max-width: 640px) {
+    .header h1 { font-size: 16px; }
+    .countdown { font-size: 12px; padding: 6px 14px; }
+    .countdown strong { font-size: 18px; }
+    .tabs { padding: 10px 16px 0; gap: 0; }
+    .tab { padding: 8px 10px; font-size: 12px; }
+    .main { padding: 14px; }
+    .overview-grid { grid-template-columns: 1fr 1fr; }
+    .files-grid { grid-template-columns: 1fr; }
+    .budget-grid { grid-template-columns: 1fr 1fr; }
+    .vendor-header .vh-price { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <h1>💍 <span class="hl">备婚进度</span> · 十一月初九</h1>
+    <div class="countdown" id="countdown">距婚礼还有 <strong id="countDays">--</strong> 天</div>
+  </div>
+  <div class="progress-bar-wrap">
+    <label>整体进度</label>
+    <div class="progress-bar"><div class="progress-bar-fill" id="totalProgress" style="width:0%"></div></div>
+    <span class="pct" id="totalPct">0%</span>
+  </div>
+  <div class="header-sub">
+    <span>🗓️ 2026.12.17（农历十一月初九）</span>
+    <span>🏨 南沙金茂万豪 · 户外草坪+自助午餐</span>
+    <span>🍽️ 中山小榄宝珑荟 · 联姻晚宴</span>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" data-tab="overview">📋 总览</button>
+  <button class="tab" data-tab="vendors">🤝 乙方管理</button>
+  <button class="tab" data-tab="timeline">📅 时间线</button>
+  <button class="tab" data-tab="files">📁 资料库</button>
+  <button class="tab" data-tab="budget">💰 预算</button>
+</div>
+
+<div class="main">
+  <div class="panel active" id="panel-overview">
+    <div class="overview-grid" id="overviewGrid"></div>
+    <div class="section-title">🔥 待办事项（未完成）</div>
+    <div id="pendingTasks"></div>
+  </div>
+  <div class="panel" id="panel-vendors">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+      <div class="filter-row" id="vendorFilter" style="margin-bottom:0;"></div>
+      <button class="btn btn-primary btn-sm" onclick="openAddTaskModal()">+ 添加任务</button>
+    </div>
+    <div id="vendorSections"></div>
+  </div>
+  <div class="panel" id="panel-timeline">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+      <h3 style="font-size:15px; font-weight:600;">📅 备婚时间线</h3>
+      <button class="btn btn-primary btn-sm" onclick="openAddMilestoneModal()">+ 添加里程碑</button>
+    </div>
+    <div class="timeline-container" id="timelineContainer"></div>
+  </div>
+  <div class="panel" id="panel-files">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+      <div class="filter-row" id="fileFilter" style="margin-bottom:0;"></div>
+    </div>
+    <div class="files-grid" id="filesGrid"></div>
+  </div>
+  <div class="panel" id="panel-budget">
+    <div id="budgetPanel"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="addTaskModal">
+  <div class="modal">
+    <div class="modal-head"><h3>添加任务</h3><button class="modal-close" onclick="closeModal('addTaskModal')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label>所属乙方</label><select id="taskVendor"></select></div>
+      <div class="form-group"><label>任务名称</label><input type="text" id="taskName" placeholder="如：确认花艺方案"></div>
+      <div class="form-group"><label>截止日期</label><input type="date" id="taskDue"></div>
+      <div class="form-group"><label>状态</label><select id="taskStatus"><option value="pending">⏳ 待确认</option><option value="active">🔄 进行中</option><option value="done">✅ 已完成</option></select></div>
+      <div class="modal-actions"><button class="btn btn-outline" onclick="closeModal('addTaskModal')">取消</button><button class="btn btn-primary" onclick="addTask()">添加</button></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="addMilestoneModal">
+  <div class="modal">
+    <div class="modal-head"><h3>添加里程碑</h3><button class="modal-close" onclick="closeModal('addMilestoneModal')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label>里程碑名称</label><input type="text" id="milestoneName" placeholder="如：付尾款"></div>
+      <div class="form-group"><label>日期</label><input type="date" id="milestoneDate"></div>
+      <div class="form-group"><label>所属乙方</label><select id="milestoneVendor"></select></div>
+      <div class="form-group"><label>状态</label><select id="milestoneStatus"><option value="pending">⏳ 待确认</option><option value="active">🔄 进行中</option><option value="done">✅ 已完成</option></select></div>
+      <div class="modal-actions"><button class="btn btn-outline" onclick="closeModal('addMilestoneModal')">取消</button><button class="btn btn-primary" onclick="addMilestone()">添加</button></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== POLYFILLS (for WeChat/older browsers) =====
+if(!Array.prototype.flatMap){Array.prototype.flatMap=function(fn){return this.reduce((acc,item,idx,arr)=>{const r=fn(item,idx,arr);return Array.isArray(r)?acc.concat(r):acc.concat([r])},[])};}
+if(!String.prototype.padStart){String.prototype.padStart=function(len,fill){fill=String(fill||'0');let s=String(this);while(s.length<len)s=fill+s;return s;};}
+if(!Object.entries){Object.entries=function(obj){const r=[];for(const k in obj)if(Object.prototype.hasOwnProperty.call(obj,k))r.push([k,obj[k]]);return r;};}
+
+const WEDDING_DATE = new Date('2026-12-17');
+
+const VENDORS = [
+  {
+    id: 'hotel', name: '南沙金茂万豪酒店', icon: '🏛️', color: '#4a7c9b',
+    price: '\u00A532,020',
+    priceDetail: '草坪场地费\u00A55,000 + 自助午餐\u00A5398\u00D750=\u00A519,900 + 豪华双床房\u00A5500\u00D74=\u00A52,000 + 金茂湾1号套房\u00A55,120\n付款：定金\u00A59,006（3.20前） \u2192 第二笔\u00A515,010（11.17前） \u2192 尾款\u00A58,004（12.17当天）\n额外费用活动结束后当天结清',
+    tasks: [
+      { id: 'h1', title: '签订婚宴接待协议', status: 'done', due: '2026-03-09', notes: '已签盖章版' },
+      { id: 'h2', title: '确认婚宴菜单', status: 'active', due: '2026-08-01', notes: '自助餐菜单已拿到初版' },
+      { id: 'h2b', title: '确认自助午餐宾客人次（约60人）', status: 'pending', due: '2026-09-01', notes: '需统计男方+女方分别多少人' },
+      { id: 'h3', title: '确认前一天的入住安排（女方家提前入住）', status: 'pending', due: '2026-11-01', notes: '女方家提前一天到酒店住下' },
+      { id: 'h3b', title: '确认总统套房婚房布置时间', status: 'pending', due: '2026-12-15', notes: '提前一天布置婚房' },
+      { id: 'h3c', title: '提前2天确认草坪进场布置时间', status: 'pending', due: '2026-12-15', notes: '如前一天没有活动可下午进场搭建' },
+      { id: 'h4', title: '支付尾款', status: 'pending', due: '2026-12-10', notes: '' },
+      { id: 'h5', title: '确认草坪仪式时段及场地动线', status: 'pending', due: '2026-10-01', notes: '约11:00开始户外仪式' },
+      { id: 'h6', title: '确认宴会厅自助午餐时段', status: 'pending', due: '2026-10-01', notes: '仪式结束后午餐' },
+      { id: 'h7', title: '确认正日时间安排流程表', status: 'pending', due: '2026-11-15', notes: '' },
+    ],
+    files: [
+      { name: '20261217 卢崇熙先生和陈颖贤女士婚宴接待协议书-盖章版.pdf', size: '4.3 MB', type: 'pdf' },
+      { name: '婚宴自助餐菜单.pdf', size: '2.4 MB', type: 'pdf' },
+      { name: '（备婚流程）2026.12.17南沙万豪.xls', size: '34 KB', type: 'xls' },
+    ],
+    people: null
+  },
+  {
+    id: 'planner', name: '广州瑾婚礼婚策（户外草坪）', icon: '🎨', color: '#c8553d',
+    price: '\u00A520,000',
+    priceDetail: '婚礼服务费用合计\u00A520,000（不含酒店场地费、电费、管理费、电梯费、进场费等）\n付款分3笔：定金\u00A56,000（30%） \u2192 布置方案确认后\u00A512,000（60%） \u2192 余款\u00A52,000（10%，婚礼前13天付清）\n工作人员餐费另付（30/餐\u00D73餐，人数待定）',
+    tasks: [
+      { id: 'p1', title: '签订婚策合同', status: 'done', due: '2026-02-02', notes: '卢\u2022陈南沙金茂万豪酒店婚策合同' },
+      { id: 'p2', title: '确认设计方案', status: 'done', due: '2026-04-01', notes: '设计方案已出' },
+      { id: 'p3', title: '确认对接方案（蓝白更新版）', status: 'active', due: '2026-05-01', notes: '对接方案蓝白更新版已出' },
+      { id: 'p4', title: '支付定金\u00A53,000', status: 'pending', due: '', notes: '' },
+      { id: 'p4b', title: '现场勘察 + 出设计图（付\u00A57,000）', status: 'pending', due: '2026-09-01', notes: '' },
+      { id: 'p5', title: '确认花艺方案', status: 'pending', due: '2026-08-01', notes: '' },
+      { id: 'p6', title: '确认灯光音响方案（草坪仪式用）', status: 'pending', due: '2026-09-01', notes: '' },
+      { id: 'p7', title: '确认现场布置效果图', status: 'pending', due: '2026-10-01', notes: '' },
+      { id: 'p7b', title: '确认签到区布置（签到板/祝福卡）', status: 'pending', due: '2026-10-01', notes: '与户外交互环节配合' },
+      { id: 'p7c', title: '确认留影区/即影即有布置', status: 'pending', due: '2026-10-01', notes: '套餐含过塑即影即有（无限张）' },
+      { id: 'p7d', title: '确认电子相册和请柬模板', status: 'pending', due: '2026-10-01', notes: '套餐含电子相册+请柬' },
+      { id: 'p8', title: '确认户外椅子数量和摆放', status: 'pending', due: '2026-10-01', notes: '约60人，需确认是否够位' },
+      { id: 'p9', title: '确认仪式区/舞台区布置方案', status: 'pending', due: '2026-10-01', notes: '' },
+      { id: 'p10', title: '确认仪式当天背景音乐播放方案', status: 'pending', due: '2026-11-01', notes: '与仪式音乐构思配合' },
+      { id: 'p11', title: '确认进场搭建时间和撤场时间', status: 'pending', due: '2026-11-01', notes: '' },
+      { id: 'p12', title: '确认工作人员人数及餐费', status: 'pending', due: '2026-12-01', notes: '30/餐\u00D73餐，人数待定' },
+      { id: 'p13', title: '支付尾款', status: 'pending', due: '2026-12-17', notes: '结束后一次性付清' },
+      { id: 'p14', title: '婚礼当天执行', status: 'pending', due: '2026-12-17', notes: '' },
+    ],
+    files: [
+      { name: '2026.12.17卢\u2022陈南沙金茂万豪酒店婚策合同.pdf', size: '3.6 MB', type: 'pdf' },
+      { name: '（设计方案）2026.12.17南沙金茂万豪酒店婚礼.pdf', size: '12.5 MB', type: 'pdf' },
+      { name: '（对接方案）2026.12.17南沙万豪-蓝白更新.pdf', size: '9.9 MB', type: 'pdf' },
+    ],
+    detail: '套餐含：签到区、留影区、仪式区、舞台区布置，及灯光、音乐、户外椅子\n费用含：搭建费、货车费、电子相册+请柬、过塑即影即有（无限张）',
+    people: null
+  },
+  {
+    id: 'makeup', name: 'Luna（LU Makeup）化妆跟妆', icon: '💄', color: '#7b6b8d',
+    price: '\u00A52,880',
+    priceDetail: '全天跟妆\u00A52,880，已付定金\u00A51,000\n另付：一台车来回路费 + 100/h加班费（早于8:00） + 2人餐费（Luna+妈咪/姐妹化妆师）',
+    tasks: [
+      { id: 'm1', title: '签订化妆跟妆合同', status: 'done', due: '2026-02-02', notes: '腾讯电子签已签' },
+      { id: 'm1b', title: '支付定金\u00A51,000', status: 'done', due: '', notes: '已付' },
+      { id: 'm2', title: '确认试妆时间', status: 'pending', due: '2026-09-01', notes: '' },
+      { id: 'm3', title: '完成试妆', status: 'pending', due: '2026-10-01', notes: '' },
+      { id: 'm4', title: '确认婚礼当天造型（接亲/仪式/晚宴）', status: 'pending', due: '2026-11-01', notes: '当天至少3个造型：接亲\u2192户外仪式\u2192晚宴' },
+      { id: 'm4b', title: '确认Luna当天到达时间（是否需早于8:00）', status: 'pending', due: '2026-11-01', notes: '早于8:00需付加班费100/h' },
+      { id: 'm5', title: '确认Luna从南沙\u2192小榄的交通安排', status: 'pending', due: '2026-11-01', notes: '下午跟车队回小榄还是自行前往？' },
+      { id: 'm6', title: '婚礼当天跟妆', status: 'pending', due: '2026-12-17', notes: '' },
+    ],
+    files: [{ name: '【腾讯电子签】新娘化妆跟妆服务合同.pdf', size: '278 KB', type: 'pdf' }],
+    people: null
+  },
+  {
+    id: 'photo', name: 'Easy Studio 婚纱照', icon: '📸', color: '#5a8a5e',
+    price: '\u00A56,666',
+    priceDetail: '7777套系，最终价\u00A56,666，已付全款\n另付：工作人员餐费、外景门票（如有）、出发外景自驾/打车带拍摄团队',
+    tasks: [
+      { id: 'ph1', title: '确认摄影风格', status: 'done', due: '2026-03-06', notes: '已收到风格汇总，选定深圳店拍摄' },
+      { id: 'ph1b', title: '支付全款\u00A56,666', status: 'done', due: '', notes: '已付' },
+      { id: 'ph2', title: '预约拍摄日（4.12深圳）', status: 'done', due: '2026-03-06', notes: '3.6确认拍摄日为4.12，在深圳拍摄' },
+      { id: 'ph2b', title: '选定拍摄风格和外景地', status: 'done', due: '2026-04-06', notes: '4.6确定：外景1-笔架山公园，外景2-白芒拓印' },
+      { id: 'ph3', title: '婚纱照拍摄（3组妆造4种风格）', status: 'done', due: '2026-04-12', notes: '内景1组+外景2组，内景妆造不变多送1组风格，共4种风格' },
+      { id: 'ph3b', title: '线上选片', status: 'done', due: '2026-04-21', notes: '4.14收到选片二维码，4.21选好32张进入精修' },
+      { id: 'ph4a', title: '第一轮精修+反馈修改意见', status: 'done', due: '2026-05-07', notes: '5.7拿到第一轮精修，沟通修改意见' },
+      { id: 'ph4b', title: '第二轮精修', status: 'done', due: '2026-05-17', notes: '5.17拿到第二轮精修' },
+      { id: 'ph4c', title: '确认最终精修成果', status: 'done', due: '2026-05-25', notes: '5.25确认最终精修，等待交付' },
+      { id: 'ph5', title: '等待交付所有底片+精修图+胶片+微电影', status: 'active', due: '2026-06-15', notes: '精修已确认，等待全部交付物' },
+      { id: 'ph6', title: '提供精修照给婚策（电子相册/签到板用）', status: 'pending', due: '2026-07-01', notes: '收到精修后提供给婚策' },
+    ],
+    files: [
+      { name: 'Easy Studio风格汇总（内景）（最新）.pdf', size: '24.3 MB', type: 'pdf' },
+      { name: '风格汇总（深圳店）.pdf', size: '126.4 MB', type: 'pdf' },
+      { name: '深圳 4-12卢崇熙先生&陈颖贤女士 三组套系.pdf', size: '--', type: 'pdf' },
+    ],
+    detail: '套餐含：内景1套+外景2套，3组妆造\n内景妆造不变多送1组拍摄风格，共4种风格\n外景地：笔架山公园 + 白芒拓印\n底片220+，精修32张，60s微电影\n结婚登记照，1卷胶片拍摄，婚纱照手绘图\n18寸相册+24寸相框',
+    people: null
+  },
+  {
+    id: 'photographer', name: '摄影W（婚礼当天）', icon: '📷', color: '#d4873e',
+    price: '\u00A57,180',
+    priceDetail: '双机位\u00A55,680 + 下午开始全天照片直播\u00A51,500\n90张精修',
+    tasks: [
+      { id: 'pg1', title: '确认摄影W档期及合同', status: 'pending', due: '2026-06-01', notes: '待定' },
+      { id: 'pg1b', title: '确认照片直播方案（下午开始）', status: 'pending', due: '2026-10-01', notes: '' },
+      { id: 'pg2', title: '确认摄影覆盖：接亲\u2192仪式\u2192午餐\u2192晚宴', status: 'pending', due: '2026-10-01', notes: '需确认双机位是否覆盖两地（南沙+小榄）' },
+      { id: 'pg3', title: '确认摄影从南沙\u2192小榄的交通安排', status: 'pending', due: '2026-11-01', notes: '是否跟车队走' },
+      { id: 'pg4', title: '婚礼当天摄影', status: 'pending', due: '2026-12-17', notes: '' },
+    ],
+    files: [], people: null
+  },
+  {
+    id: 'videographer', name: '品味兄弟（摄像）', icon: '🎬', color: '#8b5e3c',
+    price: '\u00A55,880',
+    priceDetail: '双机位录像+美颜瘦脸\n3-5min即日快剪+50min+纪录片\n付款分2笔：定金\u00A52,940（50%） \u2192 尾款\u00A52,940（50%，婚礼当天付）',
+    tasks: [
+      { id: 'vg1', title: '确认品味兄弟档期及合同', status: 'pending', due: '2026-06-01', notes: '待定' },
+      { id: 'vg1b', title: '确认双机位覆盖南沙+小榄两地', status: 'pending', due: '2026-10-01', notes: '一个机位跟南沙仪式\u2192一个机位先去小榄？' },
+      { id: 'vg2', title: '确认即日快剪播放时间（晚宴进场？）', status: 'pending', due: '2026-10-01', notes: '3-5min快剪可在晚宴进场仪式播放' },
+      { id: 'vg3', title: '确认摄像从南沙\u2192小榄的交通安排', status: 'pending', due: '2026-11-01', notes: '' },
+      { id: 'vg4', title: '婚礼当天摄像', status: 'pending', due: '2026-12-17', notes: '' },
+    ],
+    files: [], people: null
+  },
+  {
+    id: 'host', name: '主持（邀请朋友）', icon: '🎤', color: '#c47a5a',
+    price: '--', priceDetail: '邀请朋友主持',
+    tasks: [
+      { id: 'ht1', title: '确定主持人选', status: 'pending', due: '2026-08-01', notes: '' },
+      { id: 'ht2', title: '与主持人沟通户外仪式流程', status: 'pending', due: '2026-10-01', notes: '草坪仪式流程（约11:00）' },
+      { id: 'ht2b', title: '与主持人沟通晚宴进场仪式流程', status: 'pending', due: '2026-10-01', notes: '19:30-20:00前进场仪式' },
+      { id: 'ht3', title: '准备主持词/串词', status: 'pending', due: '2026-11-01', notes: '' },
+      { id: 'ht4', title: '确认主持人从南沙\u2192小榄交通', status: 'pending', due: '2026-11-01', notes: '' },
+    ],
+    files: [], people: null
+  },
+  {
+    id: 'ring', name: 'I-primo 对戒', icon: '💍', color: '#c9a84c',
+    price: '\u00A516,300',
+    priceDetail: 'Fortuna对戒，折后\u00A516,300，已领取（广州天环店）',
+    tasks: [
+      { id: 'r1', title: '选购对戒', status: 'done', due: '', notes: 'I-primo Fortuna对戒，已领取' },
+      { id: 'r2', title: '提醒婚礼当天带对戒（仪式用）', status: 'pending', due: '2026-12-17', notes: '由伴郎/伴娘保管' },
+    ],
+    files: [], people: null
+  },
+  {
+    id: 'bride_outfit', name: 'Flower婚纱馆（新娘婚纱）', icon: '👰', color: '#e8a0bf',
+    price: '¥6,666',
+    priceDetail: '4件：裙褂+草坪轻纱+晚宴主纱+敬酒服\n已付全款3.29\n婚礼前可随时更换（有档期即可），5.30第二轮试纱',
+    tasks: [
+      { id: 'bo1', title: '试纱选4件（裙褂+草坪轻纱+晚宴主纱+敬酒服）', status: 'done', due: '2026-03-29', notes: '3.29试纱选4件，已付全款¥6,666' },
+      { id: 'bo1a', title: '第二轮试纱', status: 'active', due: '2026-05-30', notes: '看有没有新款可以提前锁定，婚礼前随时可换' },
+      { id: 'bo2', title: '确认最终4件锁定（不能再换的截止日）', status: 'pending', due: '2026-11-15', notes: '提前确认最终选款' },
+      { id: 'bo3', title: '12.15取婚纱', status: 'pending', due: '2026-12-15', notes: '取裙褂+草坪轻纱+晚宴主纱+敬酒服' },
+    ],
+    files: [],
+    people: null
+  },
+  {
+    id: 'groom_outfit', name: '广州绅士礼服（新郎礼服）', icon: '🤵', color: '#5b7ea1',
+    price: '¥2,999',
+    priceDetail: '2套三件套：草坪+晚宴\n已付订金¥2,000，余款¥999取衣时付\n10月底复尺',
+    tasks: [
+      { id: 'go1', title: '定2套三件套（草坪+晚宴）', status: 'done', due: '2026-03-29', notes: '已付订金¥2,000，余款¥999取衣时付' },
+      { id: 'go1a', title: '新郎礼服复尺', status: 'pending', due: '2026-10-31', notes: '10月底复尺，确认尺寸是否需要调整' },
+      { id: 'go2', title: '取衣+付余款¥999', status: 'pending', due: '2026-12-15', notes: '取衣时付清余款' },
+    ],
+    files: [],
+    people: null
+  },
+  {
+    id: 'mom_outfit', name: '古镇宴礼华服（妈妈服装）', icon: '👘', color: '#b87333',
+    price: '¥10,236',
+    priceDetail: '已付全款5.23\n12.15取衣（押金¥500/件×4=¥2,000），12.19归还退押金',
+    tasks: [
+      { id: 'mo1', title: '妈妈服装确定', status: 'done', due: '2026-05-23', notes: '4.18初试 + 5.23最终确定，已付全款¥10,236' },
+      { id: 'mo2', title: '12.15取妈妈服装+付押金¥2,000', status: 'pending', due: '2026-12-15', notes: '押金¥500/件×4=¥2,000' },
+      { id: 'mo3', title: '12.19归还妈妈服装（取回押金）', status: 'pending', due: '2026-12-19', notes: '所有事情结束后归还，取回押金' },
+    ],
+    files: [],
+    people: null
+  },
+  {
+    id: 'banquet', name: '中山小榄宝珑荟（晚宴）', icon: '🍽️', color: '#8b3a3a',
+    price: '--',
+    priceDetail: '晚宴费用待确认\n联姻，每桌10人，中式围餐\n五时恭候、六时入席\n19:30-20:00前进场仪式后开席',
+    tasks: [
+      { id: 'b0', title: '确认宝珑荟档期及合同', status: 'pending', due: '2026-06-01', notes: '费用待确认' },
+      { id: 'b0b', title: '确认晚宴中式围餐菜单', status: 'pending', due: '2026-08-01', notes: '' },
+      { id: 'b0c', title: '确认联姻排位方案（男方几桌/女方几桌）', status: 'pending', due: '2026-10-01', notes: '' },
+      { id: 'b1', title: '确认宴会厅布置方案（婚策还是宝珑荟负责）', status: 'pending', due: '2026-09-01', notes: '' },
+      { id: 'b2', title: '确定晚宴宾客名单和排位（约700人）', status: 'pending', due: '2026-11-01', notes: '' },
+      { id: 'b2b', title: '挑选制作纸质请柬', status: 'pending', due: '2026-10-01', notes: '' },
+      { id: 'b2c', title: '发送请柬/邀请宾客', status: 'pending', due: '2026-11-01', notes: '' },
+      { id: 'b3', title: '确认晚宴进场仪式流程', status: 'pending', due: '2026-10-01', notes: '19:30-20:00简单进场仪式' },
+      { id: 'b3b', title: '晚宴音乐构思', status: 'pending', due: '2026-11-01', notes: '' },
+      { id: 'b4', title: '准备喜糖（70桌足量）', status: 'pending', due: '2026-12-01', notes: '' },
+      { id: 'b5', title: '确认进场仪式所需物品（花瓣/泡泡机/彩带）', status: 'pending', due: '2026-11-01', notes: '' },
+      { id: 'b6', title: '确认晚宴敬酒流程', status: 'pending', due: '2026-11-01', notes: '70桌敬酒约需1-1.5小时' },
+      { id: 'b7', title: '确认宝珑荟进场布置时间', status: 'pending', due: '2026-12-15', notes: '' },
+    ],
+    files: [], people: null
+  },
+  {
+    id: 'convoy', name: '婚车车队', icon: '🚗', color: '#3a6b8b',
+    price: '--',
+    priceDetail: '当天从中山小榄出发\u2192南沙万豪\n仪式后部分车辆带宾客回小榄',
+    tasks: [
+      { id: 'c1', title: '确认主婚车', status: 'pending', due: '2026-10-01', notes: '' },
+      { id: 'c2', title: '确认车队车辆数量和司机安排', status: 'pending', due: '2026-10-01', notes: '需覆盖：新郎+兄弟团\u2192酒店，后续部分带宾客回小榄' },
+      { id: 'c3', title: '规划路线：小榄\u2192南沙万豪', status: 'pending', due: '2026-11-01', notes: '' },
+      { id: 'c4', title: '确认车队装饰（花车布置）', status: 'pending', due: '2026-11-01', notes: '' },
+      { id: 'c5', title: '确认当天出发时间', status: 'pending', due: '2026-11-01', notes: '从酒店接亲时间反推' },
+      { id: 'c6', title: '安排下午回程车辆（带宾客回小榄）', status: 'pending', due: '2026-11-01', notes: '部分宾客午餐后回小榄' },
+      { id: 'c7', title: '确认摄影/摄像人员交通（是否跟车队）', status: 'pending', due: '2026-11-01', notes: '' },
+    ],
+    files: [], people: null
+  },
+  {
+    id: 'self', name: '自备/统筹事项', icon: '📝', color: '#b08d3e',
+    price: '--', priceDetail: '',
+    tasks: [
+      { id: 's1', title: '领证', status: 'pending', due: '', notes: '' },
+      { id: 's1b', title: '领证跟拍', status: 'pending', due: '', notes: '' },
+      { id: 's2', title: '接亲游戏构思准备', status: 'pending', due: '2026-11-01', notes: '男方+车队到酒店后进行' },
+      { id: 's2b', title: '接亲游戏道具采购', status: 'pending', due: '2026-11-15', notes: '' },
+      { id: 's2c', title: '准备敬茶用品（茶具/跪垫/红包）', status: 'pending', due: '2026-11-15', notes: '接亲完成后敬茶' },
+      { id: 's2d', title: '准备开门红包（姐妹团堵门用）', status: 'pending', due: '2026-11-15', notes: '' },
+      { id: 's3', title: '户外交互环节构思（香囊/调酒/签到祝福卡/其他）', status: 'pending', due: '2026-10-01', notes: '收集更多idea' },
+      { id: 's3b', title: '户外交互物料采购（婚庆不包的部分）', status: 'pending', due: '2026-11-15', notes: '' },
+      { id: 's4', title: '仪式前茶歇安排', status: 'pending', due: '2026-11-01', notes: '宾客到达到仪式开始之间的茶歇' },
+      { id: 's5', title: '仪式音乐构思（入场/交换戒指/退场等）', status: 'pending', due: '2026-10-01', notes: '' },
+      { id: 's6', title: '致辞构思（新郎/新娘/证婚人）', status: 'pending', due: '2026-11-01', notes: '' },
+      { id: 's7', title: '确认是否邀请证婚人', status: 'pending', due: '2026-08-01', notes: '' },
+      { id: 's8', title: '确认交换戒指环节（谁送戒指？）', status: 'pending', due: '2026-11-01', notes: '伴郎/花童' },
+      { id: 's9', title: '准备新娘手捧花', status: 'pending', due: '2026-12-01', notes: '' },
+      { id: 's10', title: '准备婚礼当天红包（司机/工作人员/伴郎伴娘）', status: 'pending', due: '2026-12-01', notes: '' },
+      { id: 's11', title: '安排前一晚住宿人员名单确认', status: 'pending', due: '2026-12-01', notes: '女方家+姐妹团入住酒店' },
+      { id: 's12', title: '婚礼当天时间表定稿（精确到分钟）', status: 'pending', due: '2026-12-10', notes: '从男方出发\u2192接亲\u2192仪式\u2192午餐\u2192转场\u2192晚宴' },
+      { id: 's13', title: '兄弟团礼服（9人）', status: 'pending', due: '2026-10-01', notes: '' },
+      { id: 's14', title: '姐妹团礼服（6人+伴娘）', status: 'pending', due: '2026-10-01', notes: '' },
+      { id: 's15', title: '确认服饰当天换装时间安排', status: 'pending', due: '2026-11-01', notes: '裙褂(接亲)\u2192草坪轻纱\u2192晚宴主纱\u2192敬酒服' },
+      { id: 's16', title: '确认晚宴服饰是否需要自带到小榄', status: 'pending', due: '2026-11-01', notes: '南沙\u2192小榄换装物流' },
+    ],
+    files: [],
+    people: {
+      '\u5144\u5F1F\u56E2\uFF089\u4EBA\uFF09': '\u4F55\u6CD3\u6770\u3001\u674E\u5EFA\u79D1\u3001\u533A\u715C\u6770\u3001\u4F55\u5F18\u5386\u3001\u9EC4\u7EC5\u57F9\u3001\u9EC4\u9547\u5764\u3001\u5362\u4FCA\u6770\u3001\u9EA6\u4F1F\u6770 \u00B7 \u4F1A\u957F\u6682\u5B9A\u9EC4\u6717\u8D24',
+      '\u59D0\u59B9\u56E2\uFF086\u4EBA\uFF09': '\u5305\u6CF3\u7433\uFF08\u4F34\u5A18\u9996\u9009\uFF09\u3001\u6881\u4F69\u73CA\uFF08\u4F34\u5A18\u5907\u9009\uFF09\u3001\u5434\u5A49\u7B60\u3001\u9EC4\u5609\u6DC7\u3001\u9ECE\u4F69\u7433\u3001\u9648\u610F\u6E05 \u00B7 \u987A\u4F4D\uFF1A\u8521\u667A\u8317\u3001\u9EC4\u73AE\u5A77',
+    }
+  },
+  {
+    id: 'uncategorized', name: '其他资料', icon: '📂', color: '#7a7067',
+    price: '', priceDetail: '',
+    tasks: [],
+    files: [
+      { name: '新人问卷（男女方分开填写哈）.docx', size: '2.2 MB', type: 'docx' },
+      { name: '166.jpg', size: '174 KB', type: 'img' },
+      { name: '61.jpg', size: '112 KB', type: 'img' },
+      { name: '64.jpg', size: '137 KB', type: 'img' },
+      { name: 'IMG_1948.HEIC', size: '1.4 MB', type: 'img' },
+      { name: 'IMG_1949.HEIC', size: '1.4 MB', type: 'img' },
+      { name: 'IMG_1973.JPG', size: '22.8 MB', type: 'img' },
+      { name: 'IMG_1974.JPG', size: '25.8 MB', type: 'img' },
+      { name: 'IMG_1975.JPG', size: '27.7 MB', type: 'img' },
+    ],
+    people: null
+  }
+];
+
+let milestones = [
+  { id: 'ms0', title: '对戒领取（I-primo Fortuna）', date: '2026-03-01', vendor: 'ring', status: 'done' },
+  { id: 'ms1', title: '婚策合同签订', date: '2026-02-02', vendor: 'planner', status: 'done' },
+  { id: 'ms2', title: '化妆跟妆合同签订 + 付定金', date: '2026-02-02', vendor: 'makeup', status: 'done' },
+  { id: 'ms3', title: '酒店接待协议签订', date: '2026-03-09', vendor: 'hotel', status: 'done' },
+  { id: 'ms4', title: '设计方案确认', date: '2026-04-01', vendor: 'planner', status: 'done' },
+  { id: 'ms4b', title: '婚纱照全款支付', date: '2026-03-06', vendor: 'photo', status: 'done' },
+  { id: 'ms4c', title: '妈妈服装确认（古镇宴礼华服）', date: '2026-05-23', vendor: 'mom_outfit', status: 'done' },
+  { id: 'ms5', title: '对接方案蓝白更新确认', date: '2026-05-01', vendor: 'planner', status: 'active' },
+  { id: 'ms5b', title: '婚纱照拍摄（深圳）', date: '2026-04-12', vendor: 'photo', status: 'done' },
+  { id: 'ms6', title: '确认四大金刚档期', date: '2026-06-01', vendor: 'photographer', status: 'pending' },
+  { id: 'ms6b', title: '确认宝珑荟晚宴合同', date: '2026-06-01', vendor: 'banquet', status: 'pending' },
+  { id: 'ms7', title: '婚纱照精修确认', date: '2026-05-25', vendor: 'photo', status: 'done' },
+  { id: 'ms7b', title: '确认主持人选', date: '2026-08-01', vendor: 'host', status: 'pending' },
+  { id: 'ms7c', title: '确认户外交互方案', date: '2026-10-01', vendor: 'self', status: 'pending' },
+  { id: 'ms8', title: '试妆完成', date: '2026-10-01', vendor: 'makeup', status: 'pending' },
+  { id: 'ms9', title: '婚车车队确认', date: '2026-10-01', vendor: 'convoy', status: 'pending' },
+  { id: 'ms10', title: '最终流程确认 + 时间表定稿', date: '2026-12-01', vendor: 'self', status: 'pending' },
+  { id: 'ms11', title: '\uD83D\uDE97 男方+车队从小榄出发\u2192南沙', date: '2026-12-17', vendor: 'convoy', status: 'pending' },
+  { id: 'ms12', title: '\uD83D\uDDA4 接亲+游戏+敬茶', date: '2026-12-17', vendor: 'self', status: 'pending' },
+  { id: 'ms13', title: '\uD83D\uDC8D 户外草坪仪式（约11:00）', date: '2026-12-17', vendor: 'hotel', status: 'pending' },
+  { id: 'ms14', title: '\uD83C\uDF7D\uFE0F 自助午餐（仪式后）', date: '2026-12-17', vendor: 'hotel', status: 'pending' },
+  { id: 'ms15', title: '\uD83D\uDE97 转场回小榄', date: '2026-12-17', vendor: 'convoy', status: 'pending' },
+  { id: 'ms16', title: '\uD83C\uDF7D\uFE0F 晚宴进场仪式（19:30）', date: '2026-12-17', vendor: 'banquet', status: 'pending' },
+  { id: 'ms17', title: '\uD83E\uDD4E 晚宴开席（20:00）', date: '2026-12-17', vendor: 'banquet', status: 'pending' },
+];
+
+// ===== PAYMENT SCHEDULE =====
+var PAYMENTS = {
+  hotel: [
+    { label: '定金', amount: 9006, paid: true, dueDate: '2026-03-14', note: '3.14已付' },
+    { label: '第二笔预付款', amount: 15010, paid: false, dueDate: '2026-11-17', note: '第二笔预付款' },
+    { label: '尾款', amount: 8004, paid: false, dueDate: '2026-12-17', note: '婚宴结束当天支付，额外费用同日结清' }
+  ],
+  planner: [
+    { label: '定金（30%）', amount: 6000, paid: true, dueDate: '2026-02-03', note: '2.3已付' },
+    { label: '布置方案确认后（60%）', amount: 12000, paid: false, dueDate: '', note: '布置方案确认后支付' },
+    { label: '余款（10%）', amount: 2000, paid: false, dueDate: '2026-12-04', note: '婚礼前13天一次性付清' }
+  ],
+  makeup: [
+    { label: '订金', amount: 1000, paid: true, dueDate: '2026-02-02', note: '已付' },
+    { label: '尾款', amount: 1880, paid: false, dueDate: '2026-12-17', note: '婚礼当天支付' }
+  ],
+  photo: [
+    { label: '全款', amount: 6666, paid: true, dueDate: '2026-03-06', note: '已付全款' }
+  ],
+  photographer: [
+    { label: '全款', amount: 7180, paid: false, dueDate: '', note: '付款方式待确认' }
+  ],
+  videographer: [
+    { label: '定金（50%）', amount: 2940, paid: true, dueDate: '2026-03-17', note: '3.17已付50%定金' },
+    { label: '尾款（50%）', amount: 2940, paid: false, dueDate: '2026-12-17', note: '婚礼当天支付' }
+  ],
+  ring: [
+    { label: '全款', amount: 16300, paid: true, dueDate: '', note: '已领取' }
+  ],
+  bride_outfit: [
+    { label: '全款', amount: 6666, paid: true, dueDate: '2026-03-29', note: '3.29已付全款' }
+  ],
+  groom_outfit: [
+    { label: '订金', amount: 2000, paid: true, dueDate: '2026-03-29', note: '已付订金' },
+    { label: '余款', amount: 999, paid: false, dueDate: '2026-12-15', note: '取衣时付清余款' }
+  ],
+  mom_outfit: [
+    { label: '全款', amount: 10236, paid: true, dueDate: '2026-05-23', note: '已付全款' },
+    { label: '押金', amount: 2000, paid: false, dueDate: '2026-12-15', note: '取衣时付，12.19归还时退回' }
+  ]
+};
+
+// ===== PERSISTENCE =====
+function saveData() {
+  try {
+    localStorage.setItem('wedding_v2_vendors', JSON.stringify(VENDORS));
+    localStorage.setItem('wedding_v2_milestones', JSON.stringify(milestones));
+    localStorage.setItem('wedding_v2_payments', JSON.stringify(PAYMENTS));
+  } catch(e) { console.warn('localStorage save failed'); }
+}
+function loadData() {
+  try {
+    const v = localStorage.getItem('wedding_v2_vendors');
+    const m = localStorage.getItem('wedding_v2_milestones');
+    const pm = localStorage.getItem('wedding_v2_payments');
+    if (v) { const parsed = JSON.parse(v); VENDORS.length = 0; parsed.forEach(p => VENDORS.push(p)); }
+    if (m) { milestones = JSON.parse(m); }
+    if (pm) { PAYMENTS = JSON.parse(pm); }
+  } catch(e) { console.warn('localStorage unavailable, using default data'); }
+}
+
+// ===== HELPERS =====
+function statusBadge(s) {
+  return { pending: '<span class="badge badge-pending">\u23F3 待确认</span>', active: '<span class="badge badge-active">\uD83D\uDD04 进行中</span>', done: '<span class="badge badge-done">\u2705 已完成</span>' }[s] || '';
+}
+function fileIcon(t) { return { pdf: '\uD83D\uDCD5', xls: '\uD83D\uDCCA', docx: '\uD83D\uDCD8', img: '\uD83D\uDDBC\uFE0F', heic: '\uD83D\uDDBC\uFE0F', jpg: '\uD83D\uDDBC\uFE0F' }[t] || '\uD83D\uDCC4'; }
+function daysUntil(d) { if (!d) return null; const t = new Date(d), n = new Date(); n.setHours(0,0,0,0); t.setHours(0,0,0,0); return Math.ceil((t-n)/86400000); }
+function formatDate(d) { if (!d) return ''; const t = new Date(d); return t.getFullYear()+'.'+String(t.getMonth()+1).padStart(2,'0')+'.'+String(t.getDate()).padStart(2,'0'); }
+function getVendorName(id) { const v = VENDORS.find(x => x.id === id); return v ? v.name : ''; }
+function getAllTasks() { const t = []; VENDORS.forEach(v => v.tasks.forEach(x => t.push({...x, vendorId:v.id, vendorName:v.name, vendorIcon:v.icon, vendorColor:v.color}))); return t; }
+function generateId() { return 'id_'+Date.now()+'_'+Math.random().toString(36).substr(2,6); }
+function calcBudget() { let total=0; const items=[]; VENDORS.forEach(v => { if (v.price && v.price!=='--') { const n=parseFloat(v.price.replace(/[\u00A5,]/g,'')); if (!isNaN(n)) { total+=n; items.push({name:v.name,icon:v.icon,price:n,color:v.color}); } } }); return {total,items}; }
+
+// ===== RENDER =====
+function render() { renderCountdown(); renderOverview(); renderVendors(); renderTimeline(); renderFiles(); renderBudget(); renderVendorSelects(); updateProgress(); }
+function renderCountdown() { const d = Math.ceil((WEDDING_DATE-new Date())/86400000); document.getElementById('countDays').textContent = d>0?d:0; }
+function updateProgress() { const a=getAllTasks(), d=a.filter(t=>t.status==='done').length, t=a.length, p=t>0?Math.round(d/t*100):0; document.getElementById('totalProgress').style.width=p+'%'; document.getElementById('totalPct').textContent=p+'%'; }
+
+function renderOverview() {
+  const grid = document.getElementById('overviewGrid');
+  grid.innerHTML = '';
+  VENDORS.forEach(v => {
+    if (!v.tasks.length && !v.files.length) return;
+    const total=v.tasks.length, done=v.tasks.filter(t=>t.status==='done').length, pct=total>0?Math.round(done/total*100):0;
+    const card = document.createElement('div');
+    card.className = 'overview-card'; card.style.borderLeftColor = v.color;
+    card.onclick = () => { switchTab('vendors'); filterVendor(v.id); };
+    card.innerHTML = `<div class="oc-header"><div class="oc-title">${v.icon} ${v.name}</div>${statusBadge(done===total&&total>0?'done':done>0?'active':'pending')}</div><div class="oc-count">${done}/${total} 完成${v.price&&v.price!=='--'?' \u00B7 '+v.price:''}</div><div class="oc-progress"><div class="oc-progress-fill" style="width:${pct}%;background:${v.color}"></div></div>`;
+    grid.appendChild(card);
+  });
+  const pending = document.getElementById('pendingTasks');
+  const notDone = getAllTasks().filter(t=>t.status!=='done').sort((a,b)=>{if(!a.due)return 1;if(!b.due)return-1;return new Date(a.due)-new Date(b.due)});
+  if (!notDone.length) { pending.innerHTML='<div class="empty-state"><div class="es-icon">\uD83C\uDF89</div><p>所有任务已完成！</p></div>'; return; }
+  pending.innerHTML = notDone.map(t => {
+    const days=daysUntil(t.due); let info='';
+    if(days!==null){if(days<0)info=`<span style="color:var(--accent);font-size:11px">已逾期${Math.abs(days)}天</span>`;else if(days<=14)info=`<span style="color:var(--yellow);font-size:11px">还剩${days}天</span>`;else info=`<span style="font-size:11px">还剩${days}天</span>`;}
+    return `<div class="timeline-event"><div class="te-left"><div class="te-title">${t.vendorIcon} ${t.title}</div><div class="te-vendor">${t.vendorName}${t.due?' \u00B7 '+formatDate(t.due):''} ${info}</div></div>${statusBadge(t.status)}</div>`;
+  }).join('');
+}
+
+function renderVendors() {
+  const container = document.getElementById('vendorSections'); container.innerHTML = '';
+  const filterDiv = document.getElementById('vendorFilter');
+  filterDiv.innerHTML = `<button class="filter-chip active" onclick="filterVendor('all')">全部</button>` + VENDORS.filter(v=>v.tasks.length||v.files.length).map(v=>`<button class="filter-chip" data-vendor="${v.id}" onclick="filterVendor('${v.id}')">${v.icon} ${v.name.replace(/（.*?）/g,'')}</button>`).join('');
+  VENDORS.forEach(v => {
+    if(!v.tasks.length&&!v.files.length) return;
+    const section=document.createElement('div'); section.className='vendor-section'; section.dataset.vendor=v.id;
+    const total=v.tasks.length, done=v.tasks.filter(t=>t.status==='done').length;
+    let headerExtra = v.price&&v.price!=='--'?`<span class="vh-price">${v.price}</span>`:'';
+    let peopleHtml = v.people ? Object.entries(v.people).map(([k,val])=>`<div class="people-box"><div class="pb-title">${k}</div><div class="pb-list">${val}</div></div>`).join('') : '';
+    let detailHtml = v.detail ? `<div class="detail-box">${v.detail}</div>` : '';
+    let priceHtml = v.priceDetail ? `<div class="detail-box">\uD83D\uDCB0 ${v.priceDetail}</div>` : '';
+    section.innerHTML = `<div class="vendor-header open" onclick="toggleVendor(this)" style="border-left:4px solid ${v.color}"><div class="vh-left"><div class="vh-icon">${v.icon}</div><div class="vh-info"><div class="vh-title">${v.name}</div><div class="vh-sub">${total>0?done+'/'+total+' 完成':''}${v.files.length?' \u00B7 '+v.files.length+' 份资料':''}</div></div></div>${headerExtra}<div class="vh-toggle">\u25BC</div></div><div class="vendor-body open">${priceHtml}${detailHtml}${peopleHtml}${v.tasks.length?`<ul class="task-list">${v.tasks.map(t=>`<li class="task-item" data-task-id="${t.id}"><div class="task-check ${t.status==='done'?'done':''}" onclick="toggleTask('${v.id}','${t.id}')">${t.status==='done'?'\u2713':''}</div><div class="task-info"><div class="task-title ${t.status==='done'?'done-text':''}">${t.title}</div><div class="task-meta">${t.due?`<span>\uD83D\uDCC5 ${formatDate(t.due)}</span>`:''}${statusBadge(t.status)}</div>${t.notes?`<div style="font-size:11px;color:var(--text2);margin-top:2px;">${t.notes}</div>`:''}</div><button class="btn btn-outline btn-sm" onclick="deleteTask('${v.id}','${t.id}')" style="padding:2px 6px;font-size:10px;">\uD83D\uDDD1</button></li>`).join('')}</ul>`:''}${v.files.length?`<div style="margin-top:12px;font-size:12px;font-weight:500;color:var(--text2);">\uD83D\uDCCE 相关资料</div><div class="file-list">${v.files.map(f=>`<div class="file-chip"><span>${fileIcon(f.type)}</span><span>${f.name}</span></div>`).join('')}</div>`:''}<textarea class="notes-area" placeholder="备忘/对接记录..." oninput="saveVendorNotes('${v.id}',this.value)" data-vendor-notes="${v.id}">${v.notes||''}</textarea></div>`;
+    container.appendChild(section);
+  });
+}
+
+function renderTimeline() {
+  const container=document.getElementById('timelineContainer');
+  const sorted=[...milestones].sort((a,b)=>new Date(a.date)-new Date(b.date));
+  const months={};
+  sorted.forEach(m=>{const d=new Date(m.date),k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'),l=d.getFullYear()+'年'+(d.getMonth()+1)+'月';if(!months[k])months[k]={label:l,events:[]};months[k].events.push(m);});
+  container.innerHTML=Object.entries(months).map(([k,month])=>`<div class="timeline-month"><div class="timeline-month-title">${month.label}</div>${month.events.map(e=>{const vn=e.vendor?getVendorName(e.vendor):'',days=daysUntil(e.date);let tag='';if(e.status!=='done'){if(days!==null&&days<0)tag='<span class="badge badge-overdue" style="margin-left:6px">已逾期</span>';else if(days!==null&&days<=30)tag='<span class="badge badge-active" style="margin-left:6px">还剩'+days+'天</span>';}return `<div class="timeline-event"><div class="te-left"><div class="te-date">${formatDate(e.date)}</div><div class="te-title">${e.title} ${tag}</div>${vn?`<div class="te-vendor">${vn}</div>`:''}</div>${statusBadge(e.status)}</div>`;}).join('')}</div>`).join('');
+}
+
+function renderFiles() {
+  const grid=document.getElementById('filesGrid');
+  const types=[...new Set(VENDORS.flatMap(v=>v.files.map(f=>f.type)))];
+  document.getElementById('fileFilter').innerHTML=`<button class="filter-chip active" onclick="filterFiles('all')">全部</button>`+types.map(t=>`<button class="filter-chip" data-filetype="${t}" onclick="filterFiles('${t}')">${fileIcon(t)} ${t.toUpperCase()}</button>`).join('');
+  const allFiles=[]; VENDORS.forEach(v=>v.files.forEach(f=>allFiles.push({...f,vendorId:v.id,vendorName:v.name,vendorColor:v.color,vendorIcon:v.icon})));
+  grid.innerHTML=allFiles.map(f=>`<div class="file-card" data-filetype="${f.type}"><div class="ff-icon">${fileIcon(f.type)}</div><div class="ff-info"><div class="ff-name">${f.name}</div><div class="ff-meta">${f.size}</div><span class="ff-vendor" style="background:${f.vendorColor}20;color:${f.vendorColor}">${f.vendorIcon} ${f.vendorName}</span></div></div>`).join('');
+}
+
+function renderBudget() {
+  var totalBudget = 0, totalPaid = 0, totalUnpaid = 0;
+  var vendorPayments = [];
+
+  VENDORS.forEach(function(v) {
+    var schedule = PAYMENTS[v.id];
+    if (!schedule || !schedule.length) return;
+    var vTotal = 0, vPaid = 0;
+    schedule.forEach(function(p) { vTotal += p.amount; if (p.paid) vPaid += p.amount; });
+    totalBudget += vTotal;
+    totalPaid += vPaid;
+    totalUnpaid += (vTotal - vPaid);
+    vendorPayments.push({ vendor: v, schedule: schedule, total: vTotal, paid: vPaid, unpaid: vTotal - vPaid });
+  });
+
+  var paidPct = totalBudget > 0 ? Math.round(totalPaid / totalBudget * 100) : 0;
+
+  var pendingVendors = VENDORS.filter(function(v) {
+    return (!PAYMENTS[v.id] || !PAYMENTS[v.id].length) && v.id !== 'uncategorized';
+  });
+
+  var html = '';
+
+  // ===== Summary stats =====
+  html += '<div class="budget-stats">';
+  html += '<div class="budget-stat"><div class="bs-icon">💰</div><div class="bs-label">已确认预算</div><div class="bs-value clr-blue">¥' + totalBudget.toLocaleString() + '</div></div>';
+  html += '<div class="budget-stat"><div class="bs-icon">✅</div><div class="bs-label">已支付</div><div class="bs-value clr-green">¥' + totalPaid.toLocaleString() + '</div></div>';
+  html += '<div class="budget-stat"><div class="bs-icon">⏳</div><div class="bs-label">待支付</div><div class="bs-value clr-accent">¥' + totalUnpaid.toLocaleString() + '</div></div>';
+  html += '</div>';
+
+  // ===== Progress bar =====
+  html += '<div class="budget-bar-wrap"><div class="budget-bar"><div class="budget-bar-fill" style="width:' + paidPct + '%"></div></div><div class="budget-bar-labels"><span>已付 ' + paidPct + '%</span><span>¥' + totalPaid.toLocaleString() + ' / ¥' + totalBudget.toLocaleString() + '</span></div></div>';
+
+  // ===== Payment detail cards =====
+  html += '<div class="pay-section-title">📋 分项目付款明细</div>';
+
+  vendorPayments.forEach(function(vp) {
+    var v = vp.vendor;
+    var pctV = vp.total > 0 ? Math.round(vp.paid / vp.total * 100) : 0;
+
+    html += '<div class="pay-card">';
+    html += '<div class="pay-card-head" onclick="togglePayCard(this)">';
+    html += '<div class="pch-left"><span class="pch-icon">' + v.icon + '</span><span class="pch-name">' + v.name.replace(/（.*?）/g,'') + '</span></div>';
+    if (vp.paid > 0) html += '<span class="pch-paid">已付¥' + vp.paid.toLocaleString() + '</span>';
+    html += '<span class="pch-amount">¥' + vp.total.toLocaleString() + '</span>';
+    html += '<span class="pch-toggle">▼</span>';
+    html += '</div>';
+    html += '<div class="pay-card-bar"><div class="pay-card-bar-fill" style="width:' + pctV + '%"></div></div>';
+    html += '<div class="pay-card-body">';
+    html += '<table class="pay-table"><thead><tr><th>阶段</th><th>金额</th><th>截止日期</th><th>状态</th></tr></thead><tbody>';
+
+    vp.schedule.forEach(function(p, idx) {
+      var days = daysUntil(p.dueDate);
+      var statusClass = p.paid ? 'paid' : (days !== null && days < 0 ? 'overdue' : 'unpaid');
+      var statusText = p.paid ? '✓ 已付' : (days !== null && days < 0 ? '⚠ 逾期' : '待支付');
+      var dueDisplay = p.dueDate ? formatDate(p.dueDate) : '--';
+      if (!p.paid && days !== null && days >= 0 && days <= 30) {
+        dueDisplay += '<br><span style="font-size:10px;color:var(--yellow)">还剩' + days + '天</span>';
+      } else if (!p.paid && days !== null && days < 0) {
+        dueDisplay += '<br><span style="font-size:10px;color:var(--accent)">逾期' + Math.abs(days) + '天</span>';
+      }
+      html += '<tr>';
+      html += '<td>' + p.label + '</td>';
+      html += '<td class="amt ' + (p.paid ? 'amt-paid' : 'amt-unpaid') + '">¥' + p.amount.toLocaleString() + '</td>';
+      html += '<td>' + dueDisplay + '</td>';
+      html += '<td><span class="pay-chip ' + statusClass + '" onclick="event.stopPropagation();togglePayment(\'' + v.id + '\',' + idx + ')">' + statusText + '</span></td>';
+      html += '</tr>';
+    });
+
+    html += '</tbody></table>';
+
+    var hasNotes = vp.schedule.some(function(p) { return p.note; });
+    if (hasNotes) {
+      html += '<div class="pay-card-note">';
+      vp.schedule.forEach(function(p) {
+        if (p.note) html += '<b>' + p.label + '</b>：' + p.note + '<br>';
+      });
+      html += '</div>';
+    }
+
+    html += '</div></div>';
+  });
+
+  // ===== Pending vendors =====
+  if (pendingVendors.length > 0) {
+    html += '<div class="pay-section-title">⚠️ 待确认费用</div>';
+    html += '<div class="pay-card"><div class="pay-card-body">';
+    pendingVendors.forEach(function(v, idx) {
+      var noteText = v.priceDetail ? v.priceDetail.split('\n')[0] : '费用待确认';
+      html += '<div class="pending-item"' + (idx === 0 ? ' style="border-top:none"' : '') + '>';
+      html += '<span class="pi-name">' + v.icon + ' ' + v.name.replace(/（.*?）/g,'') + '</span>';
+      html += '<span class="pi-note">' + noteText + '</span>';
+      html += '</div>';
+    });
+    html += '</div></div>';
+  }
+
+  // ===== Extra notes =====
+  html += '<div class="pay-card" style="margin-top:16px"><div class="pay-card-body"><div class="pay-card-note" style="line-height:2">';
+  html += '<b>额外待确认费用</b><br>';
+  html += '· 婚策工作人员餐费（30/餐×3餐×人数）<br>';
+  html += '· 婚纱/礼服/新郎礼服/兄弟团/姐妹团服饰费用<br>';
+  html += '· 喜糖、请柬等<br>';
+  html += '· 领证跟拍费用<br>';
+  html += '· 戶外物料/互动环节自备部分<br>';
+  html += '</div></div></div>';
+
+  html += '<div class="budget-hint">💡 点击「待支付」可切换为「已付」状态，点击卡片标题可折叠</div>';
+
+  document.getElementById('budgetPanel').innerHTML = html;
+}
+
+function togglePayment(vendorId, scheduleIdx) {
+  if (!PAYMENTS[vendorId] || !PAYMENTS[vendorId][scheduleIdx]) return;
+  PAYMENTS[vendorId][scheduleIdx].paid = !PAYMENTS[vendorId][scheduleIdx].paid;
+  saveData();
+  renderBudget();
+}
+
+function togglePayCard(el) {
+  var body = el.parentElement.querySelector('.pay-card-body');
+  var toggle = el.querySelector('.pch-toggle');
+  if (body.classList.contains('collapsed')) {
+    body.classList.remove('collapsed');
+    toggle.textContent = '▼';
+  } else {
+    body.classList.add('collapsed');
+    toggle.textContent = '▶';
+  }
+}
+
+function renderVendorSelects() {
+  const opts=VENDORS.filter(v=>v.tasks.length||v.id!=='uncategorized').map(v=>`<option value="${v.id}">${v.icon} ${v.name}</option>`).join('');
+  document.getElementById('taskVendor').innerHTML=opts;
+  document.getElementById('milestoneVendor').innerHTML=`<option value="">无</option>`+opts;
+}
+
+// ===== ACTIONS =====
+function switchTab(id) { document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active')); document.querySelector(`.tab[data-tab="${id}"]`).classList.add('active'); document.getElementById(`panel-${id}`).classList.add('active'); }
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>switchTab(t.dataset.tab)));
+function toggleVendor(el) { el.classList.toggle('open'); el.nextElementSibling.classList.toggle('open'); }
+function toggleTask(vid,tid) { const v=VENDORS.find(x=>x.id===vid),t=v.tasks.find(x=>x.id===tid); t.status=t.status==='done'?'pending':'done'; saveData(); render(); }
+function deleteTask(vid,tid) { if(!confirm('确定删除此任务？'))return; const v=VENDORS.find(x=>x.id===vid); v.tasks=v.tasks.filter(x=>x.id!==tid); saveData(); render(); }
+function saveVendorNotes(vid,val) { VENDORS.find(x=>x.id===vid).notes=val; saveData(); }
+function filterVendor(id) { document.querySelectorAll('#vendorFilter .filter-chip').forEach(c=>c.classList.remove('active')); if(id==='all'){document.querySelector('#vendorFilter .filter-chip').classList.add('active');document.querySelectorAll('.vendor-section').forEach(s=>s.style.display='');}else{document.querySelector(`#vendorFilter .filter-chip[data-vendor="${id}"]`).classList.add('active');document.querySelectorAll('.vendor-section').forEach(s=>s.style.display=s.dataset.vendor===id?'':'none');} }
+function filterFiles(type) { document.querySelectorAll('#fileFilter .filter-chip').forEach(c=>c.classList.remove('active')); if(type==='all'){document.querySelector('#fileFilter .filter-chip').classList.add('active');document.querySelectorAll('.file-card').forEach(c=>c.style.display='');}else{document.querySelector(`#fileFilter .filter-chip[data-filetype="${type}"]`).classList.add('active');document.querySelectorAll('.file-card').forEach(c=>c.style.display=c.dataset.filetype===type?'':'none');} }
+function openAddTaskModal() { document.getElementById('addTaskModal').classList.add('open'); document.getElementById('taskName').value=''; document.getElementById('taskDue').value=''; document.getElementById('taskStatus').value='pending'; }
+function openAddMilestoneModal() { document.getElementById('addMilestoneModal').classList.add('open'); document.getElementById('milestoneName').value=''; document.getElementById('milestoneDate').value=''; document.getElementById('milestoneStatus').value='pending'; }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function addTask() { const vid=document.getElementById('taskVendor').value,nm=document.getElementById('taskName').value.trim(),du=document.getElementById('taskDue').value,st=document.getElementById('taskStatus').value; if(!nm){alert('请输入任务名称');return;} VENDORS.find(x=>x.id===vid).tasks.push({id:generateId(),title:nm,status:st,due:du||'',notes:''}); saveData(); closeModal('addTaskModal'); render(); }
+function addMilestone() { const nm=document.getElementById('milestoneName').value.trim(),dt=document.getElementById('milestoneDate').value,vn=document.getElementById('milestoneVendor').value,st=document.getElementById('milestoneStatus').value; if(!nm||!dt){alert('请填写名称和日期');return;} milestones.push({id:generateId(),title:nm,date:dt,vendor:vn,status:st}); milestones.sort((a,b)=>new Date(a.date)-new Date(b.date)); saveData(); closeModal('addMilestoneModal'); render(); }
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');}));
+
+document.addEventListener('DOMContentLoaded', function() {
+  try { loadData(); render(); } catch(e) {
+    console.error('Init error:', e);
+    document.body.insertAdjacentHTML('afterbegin', '<div style="padding:20px;background:#fff3f3;color:#c8553d;font-size:14px;">页面加载出错：'+e.message+'</div>');
+  }
+});
+</script>
+<noscript><div style="padding:40px;text-align:center;font-size:16px;color:#c8553d;">此页面需要 JavaScript 支持，请更换浏览器打开。</div></noscript>
+</body>
+</html>
